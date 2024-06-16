@@ -1,0 +1,32 @@
+/* Variables */
+:root {
+  --primary-accent-color: #39C5BB;
+  --secondary-accent-color: rgba(57, 197, 187, 0.4);
+
+  --defaultCardBackground1: rgba(57, 197, 187, 1);
+  --defaultCardBackground2: rgba(57, 197, 187, 0.8);
+  --defaultCardBackground3: rgba(57, 197, 187, 0.6);
+  --defaultCardBackground4: rgba(57, 197, 187, 0.4);
+  --defaultCardBackground5: rgba(57, 197, 187, 0.2);
+}
+
+/* Default card colors */
+.defaultCardBackground1 {
+  background-color: var(--defaultCardBackground1) !important;
+}
+
+.defaultCardBackground2 {
+  background-color: var(--defaultCardBackground2) !important;
+}
+
+.defaultCardBackground3 {
+  background-color: var(--defaultCardBackground3) !important;
+}
+
+.defaultCardBackground4 {
+  background-color: var(--defaultCardBackground4) !important;
+}
+
+.defaultCardBackground5 {
+  background-color: var(--defaultCardBackground5) !important;
+}
