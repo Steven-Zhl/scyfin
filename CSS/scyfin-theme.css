@@ -1,6 +1,9 @@
 /* Variables */
 :root {
-    --primary-accent-color: #00a4dc;
+    --primary-r: 0;
+    --primary-g: 164;
+    --primary-b: 220;
+    --primary-accent-color: rgba(var(--primary-r), var(--primary-g), var(--primary-b), 1.0);
     --secondary-accent-color: #00a4dc20;
     --primary-background-color: #101010;
     --secondary-background-color: #181818;
@@ -8,6 +11,13 @@
     --secondary-background-transparent: rgba(0,0,0,0.6);
     --rounded-cards: 15px;
     --blur: 10px;
+
+    /* Alternate accents*/
+    --primary-alt1: rgb(calc(var(--primary-r) - 30), calc(var(--primary-g) - 30), calc(var(--primary-b) - 30), 1);
+    --primary-alt2: rgb(calc(var(--primary-r) - 30), calc(var(--primary-g) - 30), calc(var(--primary-b) - 30), 0.85);
+    --primary-alt3: rgb(calc(var(--primary-r) - 30), calc(var(--primary-g) - 30), calc(var(--primary-b) - 30), 0.7);
+    --primary-alt4: rgb(calc(var(--primary-r) - 30), calc(var(--primary-g) - 30), calc(var(--primary-b) - 30), 0.55);
+    --primary-alt5: rgb(calc(var(--primary-r) - 30), calc(var(--primary-g) - 30), calc(var(--primary-b) - 30), 0.4);
 }
 
 /* Setting accent color variable */
@@ -15,7 +25,14 @@
 .selectionCommandsPanel,
 .countIndicator,
 .MuiButton-root.MuiButton-containedSizeMedium,
-.MuiChip-root.MuiChip-colorInfo:not(.MuiChip-root.MuiChip-colorError) {
+.MuiChip-root.MuiChip-colorInfo:not(.MuiChip-root.MuiChip-colorError),
+progress[aria-valuenow]:before {
+    background: var(--primary-accent-color) !important;
+}
+progress::-moz-progress-bar {
+    background: var(--primary-accent-color) !important;
+}
+progress::-webkit-progress-value {
     background: var(--primary-accent-color) !important;
 }
 .MuiAlert-root.MuiAlert-standardInfo {
@@ -40,7 +57,10 @@
 .emby-tab-button:hover,
 .metadataSidebarIcon,
 .upNextDialog-countdownText,
-.MuiSvgIcon-root.MuiSvgIcon-fontSizeInherit {
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeInherit,
+.listItemImageButton:hover,
+.button-flat:hover,
+#divRunningTasks span {
     color: var(--primary-accent-color) !important;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -178,6 +198,7 @@
     height: 10px !important;
     background: var(--primary-background-transparent) !important;
     backdrop-filter: blur(2px) !important;
+    border-radius: 100px !important;
 }
 .innerCardFooterClear {
     background-color: none !important;
@@ -356,12 +377,14 @@ html,
 
 
 /* Player modifications */
-.upNextContainer, .toastVisible {
+.upNextContainer:not(#skipIntro), .toastVisible {
     backdrop-filter: blur(var(--blur)) !important;
 }
-.upNextContainer {
+.upNextContainer:not(#skipIntro) {
     border-radius: var(--rounded-cards) !important;
     background-color: rgba(0, 0, 0, 0.6) !important;
+}
+.upNextContainer {
     margin: 4% !important;
 }
 .toastVisible {
@@ -388,18 +411,29 @@ html,
     border-radius: 100px !important;
     background-color: var(--primary-accent-color) !important;
 }
-.mdl-slider::-moz-range-thumb,
+/* Moz */
+.mdl-slider::-moz-range-thumb {
+    background: #ffffff00 !important;
+    height: 10px !important;
+    width: 8px !important;
+    border-radius: 2px !important;
+}
+.mdl-slider-hoverthumb:hover::-moz-range-thumb {
+    transform: scaleY(2);
+    background: #fff !important;
+}
+/* Webkit */
 .mdl-slider::-webkit-slider-thumb {
     background: #ffffff00 !important;
     height: 10px !important;
     width: 8px !important;
     border-radius: 2px !important;
 }
-.mdl-slider-hoverthumb:hover::-moz-range-thumb,
 .mdl-slider-hoverthumb:hover::-webkit-slider-thumb {
     transform: scaleY(2);
     background: #fff !important;
 }
+
 .mdl-slider-background-upper {
     border-top-right-radius: 100px !important;
     border-bottom-right-radius: 100px !important;
@@ -440,27 +474,65 @@ html,
 }
 
 /* Support for IntroSkipper plugin */
-#skipIntro {
+#skipIntro .btnSkipIntro {
     transition: 0.2s;
-    border-radius: var(--rounded-cards) !important;
+    border-radius: 100px !important;
     backdrop-filter: blur(var(--blur)) !important;
-    border: none !important;
 }
-#skipIntro:hover {
-    box-shadow: unset !important;
+#skipIntro .btnSkipIntro:hover {
     transition: .2s;
     transform: scale(1.05);
     background: var(--primary-accent-color) !important;
 }
-#skipIntro .btnSkipIntro {
-    background:rgba(0, 0, 0, 0) !important;
-    padding: 10px 15px !important;
-}
 #skipIntro .paper-icon-button-light:hover:not(:disabled) {
     color: #FFF !important;
 }
-.sliderMarker {
-    display: none !important;
+.sliderContainer:has(.mdl-slider-hoverthumb:not(:hover)) .sliderMarker {
+    opacity: 0 !important;
+    transition: 0.2s !important;
+}
+.sliderContainer:has(.mdl-slider-hoverthumb:hover) .sliderMarker {
+    opacity: 1 !important;
+    transition: 0.2s !important;
+    height: 10px !important;
+    transform: translate3d(0,40%,0) !important;
+    -webkit-transform: translate3d(0,40%,0) !important;
+}
+.sliderMarker.watched {
+    background-color: #FFFFFF90 !important;
+    z-index: 10 !important;
+}
+#skipIntro .upNextContainer {
+    padding: 0px !important;
+}
+#skipIntro .emby-button {
+    background: rgba(30, 30, 30, 0.7) !important;
+}
+#skipIntro .emby-button:hover {
+    box-shadow: 0 0 8px rgba(var(--primary-accent-color), 0.6) !important;
+}
+#skipIntro .emby-button:focus {
+    background: rgba(30, 30, 30, 0.7) !important;
+    box-shadow: unset !important;
+}
+/* Support for InPlayerEpisodePreview plugin */
+.layout-desktop #popupFocusContainer {
+    padding: 10px !important;
+}
+.layout-desktop #popupTitleContainer {
+    margin: 0px !important;
+    padding: 10px 0px 10px 0px !important;
+}
+.layout-desktop #popupContentContainer .previewEpisodeDetails {
+    position: unset !important;
+    margin: 0px 0px 6px 10px !important;
+    font-size: 13.5px !important;
+}
+.layout-desktop #popupContentContainer .previewEpisodeTitle {
+    font-size: 16.5px !important;
+}
+.layout-desktop #popupContentContainer .listItem {
+    padding: .25em .25em .25em .5em !important;
 }
 
 
@@ -637,6 +709,22 @@ html,
     margin-inline: auto !important;
     padding: 8px 16px !important;
 }
+/* Dynamic colors for "Active Devices" section to respect theme */
+.defaultCardBackground1 {
+    background-color: var(--primary-alt1) !important;
+}
+.defaultCardBackground2 {
+    background-color: var(--primary-alt2) !important;
+}
+.defaultCardBackground3 {
+    background-color: var(--primary-alt3) !important;
+}
+.defaultCardBackground4 {
+    background-color: var(--primary-alt4) !important;
+}
+.defaultCardBackground5 {
+    background-color: var(--primary-alt5) !important;
+}
 
 
 
@@ -706,7 +794,7 @@ html,
 .layout-desktop .detailsGroupItem {
     background: var(--secondary-background-color) !important;
     padding: 10px 20px !important;
-    border-radius: 100px !important;
+    border-radius: 20px !important;
     width: fit-content !important;
     max-width: max-content !important;
     display: flex;
@@ -751,23 +839,24 @@ html,
 /* Fix for track select dropdowns */
 .trackSelections .selectContainer .detailTrackSelect {
     padding: 0 10px;
+    margin-left: 10px !important;
 }
 
 /* Re-position title */
 .layout-desktop .infoWrapper {
     margin-top: 245px !important;
-    margin-left: 20.4vw !important;
+    margin-left: 20.8vw !important;
 }
 .layout-desktop .detailPagePrimaryContainer {
     padding-left: 3.3% !important;
 }
 .layout-desktop .nameContainer {
     position: absolute !important;
-    margin-top: -55px !important;
+    margin-top: -48px !important;
 }
 .layout-desktop .itemMiscInfo {
     position: absolute !important;
-    margin-left: 21px !important;
+    margin-left: 12px !important;
     margin-top: 16px !important;
 }
 
@@ -841,7 +930,14 @@ html,
     -webkit-box-ordinal-group: 2;
     -moz-box-ordinal-group: 2;
     box-ordinal-group: 2;
-    margin: 0.45em 0 0 0 !important;
+}
+/* Modify original title / episode name position */
+.layout-desktop .nameContainer .itemName.originalTitle {
+    margin: .5em 20px !important;
+}
+.layout-desktop .nameContainer .itemName.infoText.subtitle {
+    margin: .5em 20px !important;
+    padding: 0px !important;
 }
 /* Modify play button */
 .layout-desktop .mainDetailButtons .btnPlay::after {

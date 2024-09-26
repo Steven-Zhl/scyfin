@@ -1,12 +1,8 @@
 <img src="./images/scyfin-full.png" alt="scyfin logo" width="200"/>
 
----
+### **Modern CSS theme for Jellyfin with support for backdrops and custom accent colors**
 
-### **Custom CSS theme for Jellyfin with support for backdrops**
-
----
-
-### [Go to installation](#installation)
+[Go to installation](#installation)
 
 ---
 
@@ -20,6 +16,7 @@
 <img src="./images/dashboard.png" alt="dashboard" width="100%"/>
 <img src="./images/login.png" alt="login" width="100%"/>
 
+### Base Theme
 `@import url('https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css');`
 
 ### Options (Add these below the base theme)
@@ -73,5 +70,3 @@
     * Example:
     * <img src="./images/install-client-options.png" alt="install-client-options" width="80%"/>
 * Click "Save"
-
----
