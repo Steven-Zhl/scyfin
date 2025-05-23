@@ -27,6 +27,9 @@
         background: var(--secondary-background-color) !important;
         backdrop-filter: none !important;
     }
+    .layout-desktop #itemDetailPage.noBackdropTransparency::after {
+        display: none !important;
+    }
 }
 
 /* Lower drawer buttons */
@@ -49,7 +52,7 @@
 }
 
 /* Show hamburger button */
-.layout-desktop .mainDrawerButton:not(.dashboardDocument) {
+.layout-desktop body:not(.hideMainDrawer) .mainDrawerButton:not(.dashboardDocument) {
     display: inline-flex !important;
 }
 
@@ -69,11 +72,11 @@
     margin-left: 0px !important;
 }
 
-/* Hide home button */
-.layout-desktop .headerHomeButton {
+/* Re-enable home button */
+.layout-desktop body:not(.hideMainDrawer) .headerHomeButton {
     display: block !important;
 }
-.layout-desktop .dashboardDocument .headerHomeButton {
+.layout-desktop body:not(.hideMainDrawer) .dashboardDocument .headerHomeButton {
     display: block !important;
 }
 
@@ -83,7 +86,7 @@
 }
 
 /* Background for top left buttons */
-.layout-desktop .headerLeft:not(.libraryDocument:has(.videoPlayerContainer) .headerLeft) {
+.layout-desktop body:not(.hideMainDrawer) .headerLeft:not(.libraryDocument:has(.videoPlayerContainer) .headerLeft) {
     padding: 2px !important;
     top: -3px !important;
     background-color: var(--primary-background-transparent) !important;
@@ -92,7 +95,7 @@
 }
 /* Fix for JMP */
 @supports not selector(:has(*)) {
-    .layout-desktop .headerLeft {
+    .layout-desktop body:not(.hideMainDrawer) .headerLeft {
         padding: 2px !important;
         top: -3px !important;
         background-color: var(--primary-background-transparent) !important;

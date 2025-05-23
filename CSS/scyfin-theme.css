@@ -25,7 +25,7 @@
 .selectionCommandsPanel,
 .countIndicator,
 .MuiButton-root.MuiButton-containedSizeMedium,
-.MuiChip-root.MuiChip-colorInfo:not(.MuiChip-root.MuiChip-colorError),
+.MuiChip-root.MuiChip-colorInfo:not(.MuiChip-colorError),
 progress[aria-valuenow]:before {
     background: var(--primary-accent-color) !important;
 }
@@ -50,7 +50,7 @@ progress::-webkit-progress-value {
 .progressring-spiner {
     border-color: var(--primary-accent-color) !important;
 }
-.button-link:not(.itemDetailPage .button-link),
+.page:not(.itemDetailPage) .button-link,
 .selectLabelFocused,
 .textareaLabelFocused,
 .inputLabelFocused,
@@ -143,6 +143,9 @@ progress::-webkit-progress-value {
 .layout-desktop .collectionItems .collectionItemsContainer {
     padding-left: 0% !important;
 }
+.layout-desktop .collectionItems .sectionTitleContainer {
+    padding-left: 0% !important;
+}
 /* Dynamic buttons */
 .layout-desktop .navMenuOption:hover:not(.navMenuOption-selected) {
     transform: scale(1.05) !important;
@@ -163,7 +166,8 @@ progress::-webkit-progress-value {
 .cardOverlayContainer,
 .blurhash-canvas,
 .dialog,
-.itemSelectionPanel {
+.itemSelectionPanel,
+.nowPlayingPageImage {
     border-radius: var(--rounded-cards) !important;
 }
 /* Rounded selection menu */
@@ -206,7 +210,7 @@ progress::-webkit-progress-value {
 .innerCardFooter .cardText {
     padding: 0 0 0 10px !important
 }
-.itemProgressBarForeground:not(.playbackProgress .itemProgressBarForeground):not(.transcodingProgress .itemProgressBarForeground):not(.backgroundProgress .itemProgressBarForeground) {
+.cardImageContainer .innerCardFooter .itemProgressBar .itemProgressBarForeground {
     background: var(--primary-accent-color) !important;
 }
 .itemProgressBarForeground {
@@ -341,6 +345,7 @@ html,
     margin-left: auto !important;
     margin-right: auto !important;
     width: auto !important;
+    max-width: 100% !important;
 }
 .layout-mobile .emby-button-foreground {
     top: -2px !important;
@@ -373,6 +378,30 @@ html,
 .layout-mobile .headroom--not-top:has(.headerTabs.sectionTabs:not(.hide)) .headerRight {
     background: var(--primary-background-transparent) !important;
 }
+@media (max-width: 380px) {
+    .layout-mobile .pageTitle:not(.pageTitleWithLogo):not(:empty) {
+        position: absolute !important;
+        margin-left: 50% !important;
+        transform: translate(-50%, 0) !important;
+        top: 60px !important;
+    }
+    .layout-mobile .headerTop:has(.pageTitle:not(.pageTitleWithLogo):not(:empty)) {
+        -webkit-align-items: start !important;
+        align-items: start !important;
+    }
+    .layout-mobile .skinHeader:has(.pageTitle:not(.pageTitleWithLogo):not(:empty)) {
+        height: 110px !important;
+    }
+    .layout-mobile .skinHeader:has(.pageTitle:not(.pageTitleWithLogo):not(:empty)):has(.sectionTabs:not(.hide)) {
+        height: 140px !important;
+    }
+    .layout-mobile .libraryPage:not(.noSecondaryNavPage) {
+        padding-top: 9.5em !important;
+    }
+    .layout-mobile .headroom--unpinned:has(.headerTabs.sectionTabs:not(.hide)):has(.pageTitle:not(.pageTitleWithLogo):not(:empty)) {
+        transform: translateY(-60%);
+    }
+}
 
 
 
@@ -401,11 +430,21 @@ html,
     top: 25px !important;
     backdrop-filter: unset !important;
 }
-.mdl-slider-background-flex {
-    height: 10px !important;
-    margin-top: -5px !important;
-    border-radius: 100px !important;
-    background: hsla(0,0%,100%,.2) !important;
+@supports selector(div:not(.parent .child)) {
+    .mdl-slider-background-flex:not(.layout-mobile .nowPlayingBar .mdl-slider-background-flex) {
+        height: 10px !important;
+        margin-top: -5px !important;
+        border-radius: 100px !important;
+        background: hsla(0,0%,100%,.2) !important;
+    }
+}
+@supports not selector(div:not(.parent .child)) {
+    .mdl-slider-background-flex {
+        height: 10px !important;
+        margin-top: -5px !important;
+        border-radius: 100px !important;
+        background: hsla(0,0%,100%,.2) !important;
+    }
 }
 .mdl-slider-background-lower {
     border-radius: 100px !important;
@@ -535,6 +574,17 @@ html,
     padding: .25em .25em .25em .5em !important;
 }
 
+/* Modify player buttons */
+.material-icons.fast_rewind::before {
+    content: "\e059";
+}
+.material-icons.fast_forward::before {
+    content: "\e057";
+}
+.material-icons.audiotrack::before {
+    content: "\e91f";
+}
+
 
 
 /* Settings and dashboard modifications */
@@ -660,6 +710,11 @@ html,
     padding-left: 10px !important;
 }
 .MuiList-subheader .MuiListItem-root.MuiListItem-gutters {
+    width: 85% !important;
+    margin-inline: auto !important;
+}
+/* Fix for plugins section of dashboard */
+[aria-labelledby="plugins-subheader"].MuiList-subheader .MuiListItemButton-root.MuiListItemButton-gutters {
     width: 85% !important;
     margin-inline: auto !important;
 }
@@ -814,6 +869,9 @@ html,
     padding: 15px 20px 5px 20px !important;
     border-radius: var(--rounded-cards) !important;
 }
+.layout-mobile .detailPageContent {
+    padding-right: 0 !important;
+}
 
 /* Add card around description */
 .layout-desktop .detailSectionContent {
@@ -863,6 +921,9 @@ html,
 /* Move description box */
 .layout-desktop .detailPagePrimaryContent {
     padding-left: 20.4vw !important;
+}
+.layout-mobile .detailPagePrimaryContent {
+    padding-right: 5% !important;
 }
 /* Padding for 2:3 posters */
 .layout-desktop .detailPageWrapperContainer:has(.detailImageContainer .portraitCard) .detailPagePrimaryContent {
@@ -956,7 +1017,18 @@ html,
     -webkit-flex-direction: row !important;
     flex-direction: row !important;
 }
-
+/* Change crop for list item images */
+.listItemImage {
+    background-size: contain !important;
+    border-radius: var(--rounded-cards);
+}
+/* Move up content if no backdrop image is present
+@supports selector(:has(*)) {
+    .layout-desktop:not(:has(.backdropContainer .backdropImage)) #itemBackdrop {
+        height: 20vh !important;
+    }
+}
+*/
 
 
 /* Live TV */
@@ -1057,6 +1129,11 @@ html,
     border-radius: 25px !important;
     padding: 50px !important;
 }
+/* Fix padding if login disclaimer is not present */
+.layout-desktop #loginPage .padded-left.padded-right.padded-bottom-page.margin-auto-y:not(:has(.loginDisclaimer p)) {
+    padding-bottom: 100px !important;
+}
+
 .layout-desktop #loginPage .manualLoginForm .btnCancel {
     position: absolute !important;
     background: none !important;
